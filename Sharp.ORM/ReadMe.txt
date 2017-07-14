@@ -1,0 +1,11 @@
+﻿Sharp.ORM
+1、
+TableAttribute，KeyFieldAttribute，FieldAttribute标注字段和数据库不对应的情况
+2、
+调用请直接调用EntityOperator类
+3、
+事物
+4、
+DataTable转Obj判断是否改名
+5、
+公用连接池

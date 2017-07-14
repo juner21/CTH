@@ -1,0 +1,28 @@
+﻿
+
+.top {
+    width:100%;
+    background-color:white;
+    margin:0;
+    height:30px;
+    padding:10px;
+    position:fixed;
+    z-index:99;
+}
+
+    .top a {
+        margin-right:10px;
+    }
+.center {
+    width:1000px;
+    margin:0 auto;
+}
+.top .search {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border: 1px solid #67bdcd;
+    width: 116px;
+    height: 24px;
+    padding: 0 10px;
+    outline: none;
+}

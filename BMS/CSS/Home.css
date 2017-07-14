@@ -1,0 +1,41 @@
+﻿/*****************Base********************/
+
+html,body {
+    margin:0px;
+    padding:0px;
+    height:100%;
+    width:100%;
+}
+
+
+.floatLeft {
+float:left;
+}
+
+.floatRight {
+float:right;
+}
+
+/*******************Laout********************/
+
+.menu {
+    background-color:#2f4050;
+    height:100%;    
+    width:200px;
+}
+    .menu .baseInfo {
+    background-color:#293846;
+    height:150px;
+    width:100%;
+    }
+        .menu .mlist .noActity {
+        color:#a7b1c2;
+        text-decoration:none;
+        }
+
+        .menu .mlist .actity {
+        color:#fff;
+        text-decoration:none;
+        }
+.nav {
+}
