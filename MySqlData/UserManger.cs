@@ -19,7 +19,7 @@ namespace MySqlData
 
             return new User
             {
-                UserId = "132131231",
+                Id = "132131231",
                 UserName = "MySql",
                 Pwd = "hanfei"
             };

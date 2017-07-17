@@ -11,7 +11,7 @@ namespace Sharp.ORM
     partial class ORMOperator
     {
 
-        protected internal static int Add(object o)
+        protected internal static int Add(object o,string dbSuffix)
         {
             Type type = o.GetType();
             PropertyInfo[] p = type.GetProperties();
@@ -59,10 +59,10 @@ namespace Sharp.ORM
 
             SqlParameter[] SqlParam = list.ConvertAll(e => new SqlParameter("@"+e.Key, e.Value)).ToArray();
 
-            return SqlHelper.ExecuteNonQuery(sb.ToString(), SqlParam);
+            return SqlHelper.ExecuteNonQuery(sb.ToString(),dbSuffix, SqlParam);
         }
 
-        protected internal static int Delete(object o)
+        protected internal static int Delete(object o, string dbSuffix)
         {
             Type type = o.GetType();
             PropertyInfo[] p = type.GetProperties();
@@ -98,10 +98,10 @@ namespace Sharp.ORM
 
             string sql = "delete from " + TableName + " where " + KeyField + " = @" + KeyField;
 
-            return SqlHelper.ExecuteNonQuery(sql, SqlParam);
+            return SqlHelper.ExecuteNonQuery(sql, dbSuffix, SqlParam);
         }
 
-        protected internal static int Update(object o)
+        protected internal static int Update(object o, string dbSuffix)
         {
             Type type = o.GetType();
             PropertyInfo[] p = type.GetProperties();
@@ -159,10 +159,10 @@ namespace Sharp.ORM
 
             SqlParameter[] SqlParam = list.ConvertAll(e => new SqlParameter("@"+e.Key, e.Value)).ToArray();
 
-            return SqlHelper.ExecuteNonQuery(sb.ToString(), SqlParam);
+            return SqlHelper.ExecuteNonQuery(sb.ToString(), dbSuffix, SqlParam);
         }
 
-        protected internal static List<T> SimpleSelect<T>(object o) where T : class,new()
+        protected internal static List<T> SimpleSelect<T>(object o, string dbSuffix) where T : class,new()
         {
             Type type = o.GetType();
             PropertyInfo[] p = type.GetProperties();
@@ -199,12 +199,12 @@ namespace Sharp.ORM
 
             SqlParameter[] SqlParam = list.ConvertAll(e => new SqlParameter("@" + e.Key, e.Value)).ToArray();
 
-            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, sb.ToString(), SqlParam);
+            var ds = SqlHelper.ExecuteDataSet(CommandType.Text,dbSuffix, sb.ToString(), SqlParam);
             
             return ORMHelper.DataTableToObj<T>(ds.Tables[0], p);
         }
 
-        protected internal static T SimpleSelectByKey<T>(object o) where T : class,new()
+        protected internal static T SimpleSelectByKey<T>(object o, string dbSuffix) where T : class,new()
         {
             Type type = o.GetType();
             PropertyInfo[] p = type.GetProperties();
@@ -238,7 +238,7 @@ namespace Sharp.ORM
 
             SqlParameter[] SqlParam = new SqlParameter[] { new SqlParameter("@" + ky.Key, ky.Value) };
 
-            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, sql, SqlParam);
+            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, dbSuffix, sql, SqlParam);
             
             return ORMHelper.GetObj<T>(ds.Tables[0], p);
         }
@@ -248,7 +248,7 @@ namespace Sharp.ORM
             var type = typeof(T);
             string sql = "Select * From " + ORMHelper.GetTableName(type);
 
-            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, sql, null);
+            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, string.Empty, sql);
             
             return ORMHelper.DataTableToObj<T>(ds.Tables[0], type.GetProperties());
 
@@ -259,7 +259,7 @@ namespace Sharp.ORM
             var type = typeof(T);
             string sql = "Select * From " + ORMHelper.GetTableName(type);
 
-            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, sql, null);
+            var ds = SqlHelper.ExecuteDataSet(CommandType.Text, string.Empty, sql);
 
             return ds.Tables[0];
 

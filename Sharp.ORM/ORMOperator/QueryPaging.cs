@@ -12,7 +12,7 @@ namespace Sharp.ORM
     partial class ORMOperator
     {
 
-        protected internal static DataTable QueryPaging(object o, int ipageindex, int ipagesize, out int ireccount, out int ipagecount)
+        protected internal static DataTable QueryPaging(object o,string dbSuffix, int ipageindex, int ipagesize, out int ireccount, out int ipagecount)
         {
 
             Type type = o.GetType();
@@ -51,17 +51,17 @@ namespace Sharp.ORM
 
             SqlParameter[] SqlParam = list.ConvertAll(e => new SqlParameter("@" + e.Key, e.Value)).ToArray();
 
-            return SqlHelper.QueryPaging(sb.ToString(), ipageindex, ipagesize, out ireccount, out ipagecount, SqlParam);
+            return SqlHelper.QueryPaging(sb.ToString(),dbSuffix, ipageindex, ipagesize, out ireccount, out ipagecount, SqlParam);
         }
 
-        protected internal static DataTable QueryPagingBySql(string sql, int ipageindex, int ipagesize, out int ireccount, out int ipagecount, object sqlParam)
+        protected internal static DataTable QueryPagingBySql(string sql,string dbSuffix, int ipageindex, int ipagesize, out int ireccount, out int ipagecount, object sqlParam)
         {
             //获取属性
             PropertyInfo[] p = sqlParam.GetType().GetProperties();
 
             SqlParameter[] SqlParam = p.ToList().ConvertAll(e => new SqlParameter("@" + e, e)).ToArray();
 
-            return SqlHelper.QueryPaging(sql, ipageindex, ipagesize, out ireccount, out ipagecount, SqlParam);
+            return SqlHelper.QueryPaging(sql, dbSuffix, ipageindex, ipagesize, out ireccount, out ipagecount, SqlParam);
         }
 
     }

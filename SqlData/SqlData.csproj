@@ -53,6 +53,10 @@
       <Project>{91894361-ae72-4518-a83b-d5b3ad7a4006}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sharp.ORM\Sharp.ORM.csproj">
+      <Project>{0909ed5b-afa7-407e-a88a-3219b8684eee}</Project>
+      <Name>Sharp.ORM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

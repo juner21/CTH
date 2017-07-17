@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,8 @@ namespace Sharp.ORM
 {
     static class ORMHelper
     {
+
+
 
         internal static string GetTableName(Type t)
         {

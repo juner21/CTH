@@ -7,24 +7,52 @@ using System.Configuration;
 
 namespace Sharp.ORM
 {
-    public partial class SqlHelper
+    public static partial class SqlHelper
     {
-        // public static readonly string ConnStr = ConfigurationSettings.AppSettings["ConnStr"].ToString();
-        public static readonly string ConnStr = "Data Source = KOFHAN\\SQLEXPRESS;Initial Catalog = TEST; Integrated Security = True";
+        private static string CurrentDB;
+        private static string[] ListDB;
 
-        public static int ExecuteNonQuery(string cmdText, params SqlParameter[] cmdParms)
+
+        static SqlHelper()
         {
-            return ExecuteNonQuery(CommandType.Text, cmdText, cmdParms);
+            var r = ConfigurationManager.AppSettings["SharpORMDB"].ToString();
+
+            if (string.IsNullOrWhiteSpace(r))
+                return;
+
+            ListDB = r.Split(',');
+            CurrentDB = ListDB[0];
+        }
+        
+
+        public static string ConnStr(string dbSuffix) {
+
+            var dome = "Data Source=47.92.134.179;Initial Catalog={0};Persist Security Info=True;User ID=acer";
+            if (string.IsNullOrWhiteSpace(dbSuffix))
+                return string.Format(dome, CurrentDB);
+
+            foreach (var item in ListDB)
+            {
+                if (item.EndsWith(dbSuffix))
+                    return string.Format(dome, item);
+            }
+
+            return string.Format(dome, CurrentDB);
+        }
+
+        public static int ExecuteNonQuery(string cmdText,string dbSuffix, params SqlParameter[] cmdParms)
+        {
+            return ExecuteNonQuery(CommandType.Text, dbSuffix, cmdText, cmdParms);
 
         }
 
 
-        public static int ExecuteNonQuery(CommandType cmdType, string cmdText, params SqlParameter[] cmdParms)
+        public static int ExecuteNonQuery(CommandType cmdType, string dbSuffix, string cmdText, params SqlParameter[] cmdParms)
         {
 
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            using (SqlConnection conn = new SqlConnection(ConnStr(dbSuffix)))
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, cmdParms);
                 int val = cmd.ExecuteNonQuery();
@@ -34,7 +62,7 @@ namespace Sharp.ORM
 
         }
 
-        public static int ExecuteNonQuery(SqlTransaction trans, CommandType cmdType, string cmdText, params SqlParameter[] cmdParms)
+        public static int ExecuteNonQuery(SqlTransaction trans, CommandType cmdType, string dbSuffix, string cmdText, params SqlParameter[] cmdParms)
         {
             SqlCommand cmd = new SqlCommand();
             PrepareCommand(cmd, trans.Connection, trans, cmdType, cmdText, cmdParms);
@@ -43,18 +71,18 @@ namespace Sharp.ORM
             return val;
         }
 
-        public static object ExecuteScalar(string cmdText, params SqlParameter[] cmdParms)
+        public static object ExecuteScalar(string cmdText, string dbSuffix, params SqlParameter[] cmdParms)
         {
-            return ExecuteScalar(CommandType.Text, cmdText, cmdParms);
+            return ExecuteScalar(CommandType.Text, dbSuffix,cmdText, cmdParms);
 
         }
 
-        public static object ExecuteScalar(CommandType cmdType, string cmdText, params SqlParameter[] cmdParms)
+        public static object ExecuteScalar(CommandType cmdType, string dbSuffix, string cmdText, params SqlParameter[] cmdParms)
         {
 
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            using (SqlConnection conn = new SqlConnection(ConnStr(dbSuffix)))
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, cmdParms);
                 object val = cmd.ExecuteScalar();
@@ -63,13 +91,13 @@ namespace Sharp.ORM
             }
         }
 
-        public static DataSet ExecuteDataSet(CommandType cmdType, string cmdText, params SqlParameter[] cmdParms)
+        public static DataSet ExecuteDataSet(CommandType cmdType, string dbSuffix, string cmdText, params SqlParameter[] cmdParms)
         {
             SqlCommand cmd = new SqlCommand();
             DataSet ds = new DataSet();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (SqlConnection conn = new SqlConnection(ConnStr(dbSuffix)))
                 {
                     PrepareCommand(cmd, conn, null, cmdType, cmdText, cmdParms);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -85,13 +113,13 @@ namespace Sharp.ORM
             }
         }
 
-        public static DataSet ExecuteDataSet(CommandType cmdType, string cmdText)
+        public static DataSet ExecuteDataSet(CommandType cmdType, string dbSuffix, string cmdText)
         {
             SqlCommand cmd = new SqlCommand();
             DataSet ds = new DataSet();
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnStr))
+                using (SqlConnection conn = new SqlConnection(ConnStr(dbSuffix)))
                 {
                     cmd.Connection = conn;
                     cmd.CommandText = cmdText;
@@ -108,30 +136,7 @@ namespace Sharp.ORM
                 ds.Dispose();
             }
         }
-
-        public static DataSet ExecuteDataSet(string connstr, CommandType cmdType, string cmdText)
-        {
-            SqlCommand cmd = new SqlCommand();
-            DataSet ds = new DataSet();
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connstr))
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = cmdText;
-                    cmd.CommandType = cmdType;
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-                    da.Fill(ds);
-                    return ds;
-                }
-            }
-
-            finally
-            {
-                ds.Dispose();
-            }
-        }
+        
 
         private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, SqlTransaction trans, CommandType cmdType, string cmdText, SqlParameter[] cmdParms)
         {

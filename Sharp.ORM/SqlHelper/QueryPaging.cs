@@ -11,13 +11,13 @@ namespace Sharp.ORM
     partial class SqlHelper
     {
 
-        public static DataTable QueryPaging(string cmdText, int ipageindex, int ipagesize, out int ireccount, out int ipagecount, SqlParameter[] SqlParam)
+        public static DataTable QueryPaging(string cmdText,string dbSuffix, int ipageindex, int ipagesize, out int ireccount, out int ipagecount, SqlParameter[] SqlParam)
         {
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter adapter = new SqlDataAdapter();
             ireccount = 0;
             ipagecount = 0;
-            using (SqlConnection conn = new SqlConnection(ConnStr))
+            using (SqlConnection conn = new SqlConnection(ConnStr(dbSuffix)))
             {
                 DataTable datatable = new DataTable();
                 try
