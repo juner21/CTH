@@ -24,7 +24,7 @@ namespace ConsoleTest
 
         public void Play() {
             
-            var r = UserCache.GetInstance.Get("DD");
+            var r = UserCache.GetInstance.Get("FF");
             Console.WriteLine(r);
             Console.ReadKey();
         }

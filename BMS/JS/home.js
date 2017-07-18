@@ -1,12 +1,11 @@
 ﻿
 
 //测试数据
-
 var testData = {
     test: [{
         Id:'1',
-        Name: '主页',
-        List: [{ Title: '主页1', Href: '/User/M' }, { Title: '主页2', Href: '/User/M2' }, { Title: '主页3', Href: '/User/M3' }],
+        Name: '用户管理',
+        List: [{ Title: '主页1', Href: '#foo' }, { Title: '主页2', Href: '#bar' }, { Title: '主页3', Href: '/User/M3' }],
         Show:false,
     }, {
         Id: '2',
@@ -43,12 +42,38 @@ Vue.component('menulist', {
     }
 })
 
+//路由配置
+
+require.config(
+    {
+        paths: {
+            User: "../JS/Menu/User/User",
+            Login: "../JS/Menu/User/Login"
+        }
+    }
+);
+
+require(["User","Login"], function (u,l) {
+
+    const routes = [
+        {
+            path: '/foo', component: u
+        },
+        { path: '/bar', component: l }
+    ]
+
+    const router = new VueRouter({
+        routes
+        });
 
 
-new Vue({
-    el: '#menu',
-    data:testData
+    new Vue({
+            el: '#app',
+            data: testData,
+            router
+        });
 });
+
 
 
 

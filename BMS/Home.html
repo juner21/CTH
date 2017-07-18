@@ -7,46 +7,18 @@
     <link href="CSS/Home.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        <div id="menu" class="menu floatLeft">
+    <div id="app">
+        <div class="menu floatLeft">
             <div class="baseInfo"></div>
             <menulist :md="test"></menulist>
-            <!--<div id="menulist1">
-                <ul>
-                    <li class="mlist">
-                        <a>ffffff</a>
-                        <ul>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                        </ul>
-                    </li>
-                    <li class="mlist">
-                        <a>ffffff</a>
-                        <ul>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                        </ul>
-                    </li>
-                    <li class="mlist">
-                        <a>ffffff</a>
-                        <ul>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
         </div>
         <div class="floatRight">
+            <router-view></router-view>
         </div>
     </div>    
 </body>
 </html>
 <script src="JS/vue.js"></script>
+<script src="JS/vue-router.js"></script>
+<script src="JS/require.js"></script>
 <script src="JS/home.js"></script>

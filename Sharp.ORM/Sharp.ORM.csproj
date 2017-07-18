@@ -40,11 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseClass\AboutAttribute.cs" />
+    <Compile Include="BasicClass\AboutAttribute.cs" />
     <Compile Include="EntityOperator.cs" />
-    <Compile Include="BaseClass\KeyValue.cs" />
-    <Compile Include="BaseClass\ORMHelper.cs" />
-    <Compile Include="ORMOperator\Base.cs" />
+    <Compile Include="BasicClass\KeyValue.cs" />
+    <Compile Include="BasicClass\ORMHelper.cs" />
+    <Compile Include="ORMOperator\Basic.cs" />
     <Compile Include="ORMOperator\QueryPaging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper\SqlHelper.cs" />

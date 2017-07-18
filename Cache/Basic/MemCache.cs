@@ -98,7 +98,7 @@ namespace Cache
                
 
                 var mcc = new MemcachedClientConfiguration();
-                mcc.Servers.Add(StringUtility.CreateIPEndPoint("127.0.0.1:11211"));
+                mcc.Servers.Add(StringUtility.CreateIPEndPoint("47.92.134.179:11211"));
                 mcc.NodeLocator = typeof(DefaultNodeLocator);
                 //mcc.KeyTransformer = typeof(SHA1KeyTransformer);
                 //mcc.Transcoder = typeof(DefaultTranscoder);
