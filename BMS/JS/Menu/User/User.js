@@ -1,5 +1,8 @@
 ﻿define(
     function () {
-        return { template: '<div>User</div>' };
+        return { 
+            User: { template: '<div>User</div>' },
+            Login: { template: '<div>Login</div>' }
+        };
     }
 )

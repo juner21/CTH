@@ -48,18 +48,17 @@ require.config(
     {
         paths: {
             User: "../JS/Menu/User/User",
-            Login: "../JS/Menu/User/Login"
         }
     }
 );
 
-require(["User","Login"], function (u,l) {
+require(["User"], function (u) {
 
     const routes = [
         {
-            path: '/foo', component: u
+            path: '/foo', component: u.User
         },
-        { path: '/bar', component: l }
+        { path: '/bar', component: u.Login }
     ]
 
     const router = new VueRouter({

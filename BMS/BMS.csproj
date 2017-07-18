@@ -122,7 +122,6 @@
     <Content Include="Home.html" />
     <Content Include="JS\ajax.js" />
     <Content Include="JS\home.js" />
-    <Content Include="JS\Menu\User\Login.js" />
     <Content Include="JS\Menu\User\User.js" />
     <Content Include="JS\require.js" />
     <Content Include="JS\vue-router.js" />
